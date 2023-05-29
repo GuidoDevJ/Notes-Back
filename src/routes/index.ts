@@ -11,7 +11,9 @@ import {
 
 // Variables
 const router = Router();
-
+router.get("/",(req,res)=>{
+  res.send("hola")
+})
 router.post(
   "/create/user",
   check("name", "El nombre del usuario es obligatorio").not().isEmpty(),
