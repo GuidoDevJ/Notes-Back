@@ -22,6 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -33,10 +42,10 @@ const SECRET_KEY = process.env.SECRET_KEY || "";
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
 const saltRounds = 10;
-const criptPass = async (pass) => {
-    const res = await bcrypt_1.default.hash(pass, saltRounds);
+const criptPass = (pass) => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield bcrypt_1.default.hash(pass, saltRounds);
     return res;
-};
+});
 exports.criptPass = criptPass;
 const generateJsonToken = (id) => {
     const token = jwt.sign({ id }, SECRET_KEY, {
@@ -65,3 +74,4 @@ const getToken = (authorization) => {
     return result;
 };
 exports.getToken = getToken;
+//# sourceMappingURL=index.js.map

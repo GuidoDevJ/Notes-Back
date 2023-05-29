@@ -13,3 +13,4 @@ const checkErrors = (req, res, next) => {
     next();
 };
 exports.checkErrors = checkErrors;
+//# sourceMappingURL=index.js.map

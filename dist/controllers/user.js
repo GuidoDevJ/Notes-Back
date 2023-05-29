@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -10,14 +19,11 @@ const helpers_1 = require("../helpers");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 // Variables
 const connec = mongoose_1.default.connection;
-const createUser = async (req, res) => {
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const { email } = body;
-    let bodyToDb = {
-        ...body,
-        password: await (0, helpers_1.criptPass)(body.password),
-    };
-    const user = await users_1.modelUser.findOne({ email });
+    let bodyToDb = Object.assign(Object.assign({}, body), { password: yield (0, helpers_1.criptPass)(body.password) });
+    const user = yield users_1.modelUser.findOne({ email });
     if (user === null) {
         users_1.modelUser
             .create(bodyToDb)
@@ -36,12 +42,12 @@ const createUser = async (req, res) => {
             msg: "El usuario ya existe",
         });
     }
-};
+});
 exports.createUser = createUser;
-const loggin = async (req, res) => {
+const loggin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const { email, password } = body;
-    const user = await users_1.modelUser.findOne({ email });
+    const user = yield users_1.modelUser.findOne({ email });
     if (user === null) {
         connec.close();
         return res.json({
@@ -66,7 +72,7 @@ const loggin = async (req, res) => {
             });
         }
     }
-};
+});
 exports.loggin = loggin;
 const validate = (req, res) => {
     const { authorization } = req.headers;
@@ -80,7 +86,7 @@ const validate = (req, res) => {
     }
 };
 exports.validate = validate;
-const getUser = async (req, res) => {
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { authorization } = req.headers;
     const result = (0, helpers_1.getToken)(authorization);
     if (!result) {
@@ -88,12 +94,13 @@ const getUser = async (req, res) => {
     }
     else {
         const { id } = result;
-        const results = await users_1.modelUser.findById(id).populate("notes", {
+        const results = yield users_1.modelUser.findById(id).populate("notes", {
             id: 1,
             content: 1,
             title: 1,
         });
         res.status(200).json(results);
     }
-};
+});
 exports.getUser = getUser;
+//# sourceMappingURL=user.js.map

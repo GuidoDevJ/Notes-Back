@@ -20,3 +20,4 @@ router.get("/validate/token", user_1.validate);
 router.post("/create/note", (0, express_validator_1.check)("content", "El contenido es obligatorio").isLength({ min: 4 }), (0, express_validator_1.check)("title", "El titulo es obligatorio").not().isEmpty(), middleware_1.checkErrors, note_1.createNote);
 router.patch("/update/:id", note_1.updateNoteById);
 router.delete("/delete/:id", note_1.deleteNoteById);
+//# sourceMappingURL=index.js.map

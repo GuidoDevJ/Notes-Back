@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -9,23 +18,23 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const notes_1 = require("../models/notes");
 const users_1 = require("../models/users");
 const connec = mongoose_1.default.connection;
-const createNote = async (req, res) => {
+const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const { authorization } = req.headers;
     const { id } = (0, helpers_1.getToken)(authorization);
-    const user = (await users_1.modelUser.findById(id)) || {};
-    const noteResult = await notes_1.modelNote.create({ ...body, user: id });
-    user.notes = user?.notes.concat(noteResult.id);
-    await user?.save();
+    const user = (yield users_1.modelUser.findById(id)) || {};
+    const noteResult = yield notes_1.modelNote.create(Object.assign(Object.assign({}, body), { user: id }));
+    user.notes = user === null || user === void 0 ? void 0 : user.notes.concat(noteResult.id);
+    yield (user === null || user === void 0 ? void 0 : user.save());
     connec.close();
     res.status(201).json(noteResult);
-};
+});
 exports.createNote = createNote;
-const updateNoteById = async (req, res) => {
+const updateNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const { id } = req.params;
     try {
-        const result = await notes_1.modelNote.findByIdAndUpdate(id, { ...body }, { new: true });
+        const result = yield notes_1.modelNote.findByIdAndUpdate(id, Object.assign({}, body), { new: true });
         res.status(200).json({ result });
     }
     catch (error) {
@@ -35,12 +44,12 @@ const updateNoteById = async (req, res) => {
                 msg: "Id incorrecto",
             });
     }
-};
+});
 exports.updateNoteById = updateNoteById;
-const deleteNoteById = async (req, res) => {
+const deleteNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const result = await notes_1.modelNote.findByIdAndDelete(id);
+        const result = yield notes_1.modelNote.findByIdAndDelete(id);
         if (result === null) {
             return res.status(404).json({
                 ok: false,
@@ -59,5 +68,6 @@ const deleteNoteById = async (req, res) => {
                 msg: "Id incorrecto",
             });
     }
-};
+});
 exports.deleteNoteById = deleteNoteById;
+//# sourceMappingURL=note.js.map

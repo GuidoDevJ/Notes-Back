@@ -24,3 +24,4 @@ noteSchema.set("toJSON", {
 });
 const modelNote = (0, mongoose_1.model)("Note", noteSchema);
 exports.modelNote = modelNote;
+//# sourceMappingURL=notes.js.map
