@@ -22,7 +22,7 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "start": "nodemon src/api/index.ts",
+    "start": "nodemon src/index.ts",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
