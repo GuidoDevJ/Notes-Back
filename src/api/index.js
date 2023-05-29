@@ -32,10 +32,10 @@ router.post(
 router.get("/user", getUser);
 router.get("/validate/token", validate);
 router.post("/create/note",
-check("content", "El contenido es obligatorio").isLength({ min: 4}),
-check("title", "El titulo es obligatorio").not().isEmpty(),
-checkErrors,
-createNote);
+  check("content", "El contenido es obligatorio").isLength({ min: 4 }),
+  check("title", "El titulo es obligatorio").not().isEmpty(),
+  checkErrors,
+  createNote);
 router.patch("/update/:id", updateNoteById);
 router.delete("/delete/:id", deleteNoteById);
 
